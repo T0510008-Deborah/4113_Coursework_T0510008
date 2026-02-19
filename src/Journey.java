@@ -58,3 +58,4 @@ public class Journey {
         System.out.println("Fare: £" + fare);
     }
 }
+//
