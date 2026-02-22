@@ -2,6 +2,7 @@ import java.math.BigDecimal;
 
 public class Journey {
 
+    private String passengerName;
     private int id;
     private int fromZone;
     private int toZone;
@@ -9,10 +10,12 @@ public class Journey {
     private CityRideDataset.TimeBand timeBand;
     private BigDecimal fare;
 
-    public Journey(int id, int fromZone, int toZone,
+    public Journey(String passengerName, int id, int fromZone, int toZone,
                    CityRideDataset.PassengerType passengerType,
                    CityRideDataset.TimeBand timeBand,
                    BigDecimal fare) {
+
+        this.passengerName = passengerName;
         this.id = id;
         this.fromZone = fromZone;
         this.toZone = toZone;
@@ -21,6 +24,7 @@ public class Journey {
         this.fare = fare;
     }
 
+    //geeksforgeeks
     public int getId() {
         return id;
     }
@@ -37,6 +41,8 @@ public class Journey {
         return passengerType;
     }
 
+    public int getZonesCrossed() {return Math.abs(toZone - fromZone); }
+
     public CityRideDataset.TimeBand getTimeBand() {
         return timeBand;
     }
@@ -50,12 +56,15 @@ public class Journey {
     }
 
     public void displayJourney() {
-        System.out.println("ID: " + id);
+        System.out.print("--------------------\n");
+        System.out.println("Passenger Name: " + passengerName);
+        System.out.println("Journey ID: " + id);
         System.out.println("From Zone: " + fromZone);
         System.out.println("To Zone: " + toZone);
         System.out.println("Passenger Type: " + passengerType);
+        System.out.println("Zones Crossed: " + getZonesCrossed());
         System.out.println("Time Band: " + timeBand);
         System.out.println("Fare: £" + fare);
+        System.out.print("--------------------\n");
     }
 }
-//

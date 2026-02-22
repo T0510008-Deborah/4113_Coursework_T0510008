@@ -7,13 +7,17 @@ public class JourneyManager {
     private int journeyCount;
     private int nextId;
 
+//geeksforgeeks
     public JourneyManager() {
         journeys = new Journey[5];
         journeyCount = 0;
         nextId = 1;
     }
-
-    public void addJourney(int fromZone, int toZone,
+    public boolean hasJourneys() {
+        return journeyCount > 0;
+    }
+    //oracle
+    public void addJourney(String passengerName, int fromZone, int toZone,
                            CityRideDataset.PassengerType passengerType,
                            CityRideDataset.TimeBand timeBand) {
 
@@ -40,6 +44,7 @@ public class JourneyManager {
         }
 
         Journey journey = new Journey(
+                passengerName,
                 nextId,
                 fromZone,
                 toZone,
@@ -52,8 +57,10 @@ public class JourneyManager {
         journeyCount++;
         nextId++;
 
+        System.out.print("--------------------\n");
         System.out.println("Journey added successfully.");
         System.out.println("Fare charged: £" + finalFare);
+        System.out.print("--------------------\n");
     }
 
     private BigDecimal getTotalForPassenger(CityRideDataset.PassengerType type) {
@@ -68,10 +75,11 @@ public class JourneyManager {
 
     public void listJourneys() {
         if (journeyCount == 0) {
+            System.out.print("--------------------\n");
             System.out.println("No journeys recorded.");
+            System.out.print("--------------------\n");
         } else {
             for (int i = 0; i < journeyCount; i++) {
-                System.out.println();
                 journeys[i].displayJourney();
             }
         }
@@ -88,13 +96,17 @@ public class JourneyManager {
                     journeys[j] = journeys[j + 1];
                 }
                 journeyCount--;
+                System.out.print("--------------------\n");
                 System.out.println("Journey removed.");
+                System.out.print("--------------------\n");
                 break;
             }
         }
 
         if (!found) {
+            System.out.print("--------------------\n");
             System.out.println("Journey ID not found.");
+            System.out.print("--------------------\n");
         }
     }
 
@@ -110,16 +122,21 @@ public class JourneyManager {
         }
 
         if (!found) {
+            System.out.print("--------------------\n");
             System.out.println("No journeys found for that passenger type.");
+            System.out.print("--------------------\n");
         }
     }
 
     public void showSummary() {
         if (journeyCount == 0) {
+            System.out.print("--------------------\n");
             System.out.println("No journeys to summarise.");
+            System.out.print("--------------------\n");
             return;
         }
 
+        //geeksforgeeks
         BigDecimal total = BigDecimal.ZERO;
         BigDecimal max = BigDecimal.ZERO;
         int peakCount = 0;
@@ -142,13 +159,14 @@ public class JourneyManager {
         BigDecimal average =
                 total.divide(BigDecimal.valueOf(journeyCount), 2, RoundingMode.HALF_UP);
 
-        System.out.println("\n--- Daily Summary ---");
+        System.out.println("-- Daily Summary --");
+        System.out.print("--------------------\n");
         System.out.println("Total journeys: " + journeyCount);
         System.out.println("Total cost: £" + total);
         System.out.println("Average cost: £" + average);
         System.out.println("Most expensive journey: £" + max);
         System.out.println("Peak journeys: " + peakCount);
         System.out.println("Off-peak journeys: " + offPeakCount);
+        System.out.print("--------------------\n");
     }
 }
-//
