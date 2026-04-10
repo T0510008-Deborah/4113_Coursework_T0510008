@@ -3,39 +3,18 @@ import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * ConfigManager – holds the active system configuration at runtime.
- * Responsibilities: load config from JSON file on startup (with safe defaults
- * if the file is missing), store fare rules, discount rates, and daily caps,
- * and allow admin updates to be applied and saved back to file.
- *
- * Note: JSON parsing uses a lightweight manual approach to avoid external
- * library dependencies, keeping the project self-contained.
- */
 public class ConfigManager {
 
-    // Fare rules keyed by "fromZone-toZone-TIMEBAND"
     private Map<String, BigDecimal> baseFares;
 
-    // Discount rate per passenger type (0.00 to 1.00)
     private Map<String, BigDecimal> discountRates;
 
-    // Maximum daily spend per passenger type
     private Map<String, BigDecimal> dailyCaps;
 
-    /** Constructs a ConfigManager and loads safe default values. */
     public ConfigManager() {
         loadDefaults();
     }
 
-    // ── Loading ───────────────────────────────────────────────────
-
-    /**
-     * Attempts to load configuration from a JSON file.
-     * Falls back to safe defaults if the file is missing or unreadable.
-     *
-     * @param filePath path to the JSON configuration file
-     */
     public void loadFromFile(String filePath) {
         java.io.File configFile = new java.io.File(filePath);
         if (!configFile.exists()) {
@@ -43,19 +22,15 @@ public class ConfigManager {
             return;
         }
 
-        // File exists but JSON parsing is outside current scope —
-        // defaults remain active; admin can update at runtime.
         System.out.println("[Config] Configuration loaded from " + filePath);
     }
 
-    /** Loads the same safe default values that were hardcoded in CityRideDataset Part 1. */
     private void loadDefaults() {
         loadDefaultFares();
         loadDefaultDiscounts();
         loadDefaultCaps();
     }
 
-    /** Populates baseFares with the full Part 1 dataset values as defaults. */
     private void loadDefaultFares() {
         baseFares = new HashMap<>();
 
@@ -102,7 +77,6 @@ public class ConfigManager {
         putFare(5, 5, "OFF_PEAK", "1.50");
     }
 
-    /** Populates discountRates with Part 1 default values. */
     private void loadDefaultDiscounts() {
         discountRates = new HashMap<>();
         discountRates.put("ADULT", new BigDecimal("0.00"));
@@ -111,7 +85,6 @@ public class ConfigManager {
         discountRates.put("SENIOR_CITIZEN", new BigDecimal("0.30"));
     }
 
-    /** Populates dailyCaps with Part 1 default values. */
     private void loadDefaultCaps() {
         dailyCaps = new HashMap<>();
         dailyCaps.put("ADULT", new BigDecimal("8.00"));
@@ -120,53 +93,19 @@ public class ConfigManager {
         dailyCaps.put("SENIOR_CITIZEN", new BigDecimal("7.00"));
     }
 
-    // ── Getters ───────────────────────────────────────────────────
-
-    /**
-     * Returns the base fare for a given zone pair and time band.
-     *
-     * @param fromZone  departure zone
-     * @param toZone    destination zone
-     * @param timeBand  PEAK or OFF_PEAK
-     * @return base fare as BigDecimal
-     */
     public BigDecimal getBaseFare(int fromZone, int toZone, String timeBand) {
         String key = buildFareKey(fromZone, toZone, timeBand);
         return baseFares.getOrDefault(key, BigDecimal.ZERO);
     }
 
-    /**
-     * Returns the discount rate for a given passenger type.
-     *
-     * @param passengerType passenger category string
-     * @return discount rate (0.00 to 1.00)
-     */
     public BigDecimal getDiscountRate(String passengerType) {
         return discountRates.getOrDefault(passengerType.toUpperCase(), BigDecimal.ZERO);
     }
 
-    /**
-     * Returns the daily spending cap for a given passenger type.
-     *
-     * @param passengerType passenger category string
-     * @return daily cap as BigDecimal
-     */
     public BigDecimal getDailyCap(String passengerType) {
         return dailyCaps.getOrDefault(passengerType.toUpperCase(), new BigDecimal("99.99"));
     }
 
-    // ── Admin update methods ──────────────────────────────────────
-
-    /**
-     * Updates a single base fare rule.
-     * Validates that the fare is positive before applying.
-     *
-     * @param fromZone departure zone
-     * @param toZone   destination zone
-     * @param timeBand PEAK or OFF_PEAK
-     * @param newFare  new fare value
-     * @return true if update succeeded; false if validation failed
-     */
     public boolean updateBaseFare(int fromZone, int toZone,
                                   String timeBand, BigDecimal newFare) {
         if (newFare.compareTo(BigDecimal.ZERO) <= 0) {
@@ -178,14 +117,6 @@ public class ConfigManager {
         return true;
     }
 
-    /**
-     * Updates the discount rate for a passenger type.
-     * Validates that the rate is between 0.00 and 1.00.
-     *
-     * @param passengerType passenger category
-     * @param newRate       new discount rate
-     * @return true if update succeeded; false if validation failed
-     */
     public boolean updateDiscountRate(String passengerType, BigDecimal newRate) {
         if (newRate.compareTo(BigDecimal.ZERO) < 0
                 || newRate.compareTo(BigDecimal.ONE) > 0) {
@@ -200,14 +131,6 @@ public class ConfigManager {
         return true;
     }
 
-    /**
-     * Updates the daily cap for a passenger type.
-     * Validates that the cap is positive.
-     *
-     * @param passengerType passenger category
-     * @param newCap        new daily cap
-     * @return true if update succeeded; false if validation failed
-     */
     public boolean updateDailyCap(String passengerType, BigDecimal newCap) {
         if (newCap.compareTo(BigDecimal.ZERO) <= 0) {
             System.out.println("Error: Daily cap must be greater than zero.");
@@ -221,9 +144,6 @@ public class ConfigManager {
         return true;
     }
 
-    // ── Display ───────────────────────────────────────────────────
-
-    /** Prints the full active configuration to the console. */
     public void displayConfig() {
         System.out.println("--------------------");
         System.out.println("DISCOUNT RATES:");
@@ -239,14 +159,10 @@ public class ConfigManager {
         System.out.println("--------------------");
     }
 
-    // ── Private helpers ───────────────────────────────────────────
-
-    /** Builds the map key for a base fare lookup. */
     private String buildFareKey(int fromZone, int toZone, String timeBand) {
         return fromZone + "-" + toZone + "-" + timeBand.toUpperCase();
     }
 
-    /** Adds a fare entry to the baseFares map. */
     private void putFare(int from, int to, String band, String amount) {
         baseFares.put(buildFareKey(from, to, band),
                 new BigDecimal(amount).setScale(2, RoundingMode.HALF_UP));

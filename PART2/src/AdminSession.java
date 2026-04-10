@@ -1,11 +1,6 @@
 import java.math.BigDecimal;
 import java.util.Scanner;
 
-/**
- * AdminSession – manages the password-protected admin menu.
- * Responsibilities: authenticate the admin, display the admin menu,
- * and delegate config updates to ConfigManager with full validation.
- */
 public class AdminSession {
 
     private static final String ADMIN_PASSWORD = "CityRide2026";
@@ -15,21 +10,11 @@ public class AdminSession {
     private final Scanner scanner;
     private final ConfigManager configManager;
 
-    /**
-     * Constructs an AdminSession.
-     *
-     * @param scanner       shared Scanner for user input
-     * @param configManager the active system configuration
-     */
     public AdminSession(Scanner scanner, ConfigManager configManager) {
         this.scanner = scanner;
         this.configManager = configManager;
     }
 
-    /**
-     * Starts the admin session by prompting for a password.
-     * Allows up to MAX_ATTEMPTS attempts before denying access.
-     */
     public void start() {
         boolean authenticated = attemptLogin();
         if (!authenticated) {
@@ -42,13 +27,6 @@ public class AdminSession {
         runAdminMenu();
     }
 
-    // ── Login ─────────────────────────────────────────────────────
-
-    /**
-     * Prompts for the admin password up to MAX_ATTEMPTS times.
-     *
-     * @return true if the correct password was entered, false otherwise
-     */
     private boolean attemptLogin() {
         int attempts = 0;
         while (attempts < MAX_ATTEMPTS) {
@@ -67,9 +45,6 @@ public class AdminSession {
         return false;
     }
 
-    // ── Admin menu loop ───────────────────────────────────────────
-
-    /** Displays and processes the admin menu until the admin chooses to exit. */
     private void runAdminMenu() {
         boolean adminRunning = true;
         while (adminRunning) {
@@ -79,7 +54,6 @@ public class AdminSession {
         }
     }
 
-    /** Prints the admin menu options. */
     private void showAdminMenu() {
         System.out.println("\n" + SEPARATOR);
         System.out.println("  ADMIN MENU");
@@ -92,12 +66,6 @@ public class AdminSession {
         System.out.print("Enter choice: ");
     }
 
-    /**
-     * Routes the admin's menu choice to the appropriate handler.
-     *
-     * @param choice the input string from the admin
-     * @return false if the admin chose to exit; true to keep the menu running
-     */
     private boolean handleAdminChoice(String choice) {
         switch (choice) {
             case "1":
@@ -120,9 +88,6 @@ public class AdminSession {
         }
     }
 
-    // ── Update handlers ───────────────────────────────────────────
-
-    /** Prompts for and applies an update to a base fare rule. */
     private void handleUpdateFare() {
         System.out.print("From zone (1-5): ");
         int fromZone = readInt();
@@ -139,7 +104,6 @@ public class AdminSession {
         }
     }
 
-    /** Prompts for and applies an update to a passenger discount rate. */
     private void handleUpdateDiscount() {
         System.out.print("Passenger type (ADULT/STUDENT/CHILD/SENIOR_CITIZEN): ");
         String type = scanner.nextLine().trim().toUpperCase();
@@ -152,7 +116,6 @@ public class AdminSession {
         }
     }
 
-    /** Prompts for and applies an update to a daily spending cap. */
     private void handleUpdateCap() {
         System.out.print("Passenger type (ADULT/STUDENT/CHILD/SENIOR_CITIZEN): ");
         String type = scanner.nextLine().trim().toUpperCase();
@@ -165,13 +128,6 @@ public class AdminSession {
         }
     }
 
-    // ── Input helpers ─────────────────────────────────────────────
-
-    /**
-     * Reads an integer from the scanner, re-prompting on invalid input.
-     *
-     * @return the integer entered by the user
-     */
     private int readInt() {
         while (true) {
             try {
@@ -182,11 +138,6 @@ public class AdminSession {
         }
     }
 
-    /**
-     * Reads a BigDecimal from the scanner, re-prompting on invalid input.
-     *
-     * @return the BigDecimal entered by the user
-     */
     private BigDecimal readBigDecimal() {
         while (true) {
             try {

@@ -1,17 +1,9 @@
 import java.util.Scanner;
 
-/**
- * CityRideLite – main entry point for the CityRide Lite Part 2 application.
- * Responsibilities: initialise shared resources, display role selection,
- * and route the user to either RiderSession or AdminSession.
- */
 public class CityRideLite {
 
     private static final String SEPARATOR = "====================";
 
-    /**
-     * Application entry point. Loads config, shows role menu, delegates to sessions.
-     */
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
@@ -47,7 +39,6 @@ public class CityRideLite {
         scanner.close();
     }
 
-    /** Displays the application welcome banner. */
     private static void showBanner() {
         System.out.println(SEPARATOR);
         System.out.println("   WELCOME TO CITYRIDE LITE");
@@ -55,7 +46,6 @@ public class CityRideLite {
         System.out.println(SEPARATOR);
     }
 
-    /** Displays the role selection prompt. */
     private static void showRoleMenu() {
         System.out.println("\nSelect role:");
         System.out.println("  RIDER  - Manage your journeys");
