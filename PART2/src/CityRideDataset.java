@@ -53,7 +53,6 @@ final class CityRideDataset {
     private static Map<String, BigDecimal> buildBaseFare() {
         Map<String, BigDecimal> m = new HashMap<>();
 
-        // Peak fares
         put(m,1,1,TimeBand.PEAK,"2.50"); put(m,1,2,TimeBand.PEAK,"3.20");
         put(m,1,3,TimeBand.PEAK,"3.80"); put(m,1,4,TimeBand.PEAK,"4.40");
         put(m,1,5,TimeBand.PEAK,"5.00");
@@ -74,7 +73,6 @@ final class CityRideDataset {
         put(m,5,3,TimeBand.PEAK,"3.70"); put(m,5,4,TimeBand.PEAK,"2.90");
         put(m,5,5,TimeBand.PEAK,"1.90");
 
-        // Off-peak fares
         put(m,1,1,TimeBand.OFF_PEAK,"2.00"); put(m,1,2,TimeBand.OFF_PEAK,"2.70");
         put(m,1,3,TimeBand.OFF_PEAK,"3.20"); put(m,1,4,TimeBand.OFF_PEAK,"3.70");
         put(m,1,5,TimeBand.OFF_PEAK,"4.20");
