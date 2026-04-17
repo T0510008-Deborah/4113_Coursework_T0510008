@@ -129,22 +129,30 @@ public class AdminSession {
     }
 
     private int readInt() {
-        while (true) {
+        int value = 0;
+        boolean valid = false;
+        while (!valid) {
             try {
-                return Integer.parseInt(scanner.nextLine().trim());
+                value = Integer.parseInt(scanner.nextLine().trim());
+                valid = true;
             } catch (NumberFormatException e) {
                 System.out.print("Please enter a whole number: ");
             }
         }
+        return value;
     }
 
     private BigDecimal readBigDecimal() {
-        while (true) {
+        BigDecimal value = BigDecimal.ZERO;
+        boolean valid = false;
+        while (!valid) {
             try {
-                return new BigDecimal(scanner.nextLine().trim());
+                value = new BigDecimal(scanner.nextLine().trim());
+                valid = true;
             } catch (NumberFormatException e) {
                 System.out.print("Please enter a valid decimal number (e.g. 3.50): ");
             }
         }
+        return value;
     }
 }
