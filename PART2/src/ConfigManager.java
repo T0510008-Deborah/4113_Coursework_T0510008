@@ -21,57 +21,48 @@ public class ConfigManager {
             System.out.println("[Config] config.json not found. Using default values.");
             return;
         }
-
         System.out.println("[Config] Configuration loaded from " + filePath);
     }
 
     private void loadDefaults() {
-        loadDefaultFares();
+        loadDefaultFaresPeak();
+        loadDefaultFaresOffPeak();
         loadDefaultDiscounts();
         loadDefaultCaps();
     }
 
-    private void loadDefaultFares() {
+    private void loadDefaultFaresPeak() {
         baseFares = new HashMap<>();
-
-        // Peak fares
         putFare(1, 1, "PEAK", "2.50"); putFare(1, 2, "PEAK", "3.20");
         putFare(1, 3, "PEAK", "3.80"); putFare(1, 4, "PEAK", "4.40");
         putFare(1, 5, "PEAK", "5.00");
-
         putFare(2, 1, "PEAK", "3.20"); putFare(2, 2, "PEAK", "2.30");
         putFare(2, 3, "PEAK", "3.10"); putFare(2, 4, "PEAK", "3.80");
         putFare(2, 5, "PEAK", "4.50");
-
         putFare(3, 1, "PEAK", "3.80"); putFare(3, 2, "PEAK", "3.10");
         putFare(3, 3, "PEAK", "2.10"); putFare(3, 4, "PEAK", "3.00");
         putFare(3, 5, "PEAK", "3.70");
-
         putFare(4, 1, "PEAK", "4.40"); putFare(4, 2, "PEAK", "3.80");
         putFare(4, 3, "PEAK", "3.00"); putFare(4, 4, "PEAK", "2.00");
         putFare(4, 5, "PEAK", "2.90");
-
         putFare(5, 1, "PEAK", "5.00"); putFare(5, 2, "PEAK", "4.50");
         putFare(5, 3, "PEAK", "3.70"); putFare(5, 4, "PEAK", "2.90");
         putFare(5, 5, "PEAK", "1.90");
+    }
 
-        // Off-peak fares
+    private void loadDefaultFaresOffPeak() {
         putFare(1, 1, "OFF_PEAK", "2.00"); putFare(1, 2, "OFF_PEAK", "2.70");
         putFare(1, 3, "OFF_PEAK", "3.20"); putFare(1, 4, "OFF_PEAK", "3.70");
         putFare(1, 5, "OFF_PEAK", "4.20");
-
         putFare(2, 1, "OFF_PEAK", "2.70"); putFare(2, 2, "OFF_PEAK", "1.90");
         putFare(2, 3, "OFF_PEAK", "2.60"); putFare(2, 4, "OFF_PEAK", "3.20");
         putFare(2, 5, "OFF_PEAK", "3.80");
-
         putFare(3, 1, "OFF_PEAK", "3.20"); putFare(3, 2, "OFF_PEAK", "2.60");
         putFare(3, 3, "OFF_PEAK", "1.70"); putFare(3, 4, "OFF_PEAK", "2.50");
         putFare(3, 5, "OFF_PEAK", "3.10");
-
         putFare(4, 1, "OFF_PEAK", "3.70"); putFare(4, 2, "OFF_PEAK", "3.20");
         putFare(4, 3, "OFF_PEAK", "2.50"); putFare(4, 4, "OFF_PEAK", "1.60");
         putFare(4, 5, "OFF_PEAK", "2.40");
-
         putFare(5, 1, "OFF_PEAK", "4.20"); putFare(5, 2, "OFF_PEAK", "3.80");
         putFare(5, 3, "OFF_PEAK", "3.10"); putFare(5, 4, "OFF_PEAK", "2.40");
         putFare(5, 5, "OFF_PEAK", "1.50");
@@ -106,8 +97,7 @@ public class ConfigManager {
         return dailyCaps.getOrDefault(passengerType.toUpperCase(), new BigDecimal("99.99"));
     }
 
-    public boolean updateBaseFare(int fromZone, int toZone,
-                                  String timeBand, BigDecimal newFare) {
+    public boolean updateBaseFare(int fromZone, int toZone, String timeBand, BigDecimal newFare) {
         if (newFare.compareTo(BigDecimal.ZERO) <= 0) {
             System.out.println("Error: Fare must be greater than zero.");
             return false;
@@ -118,8 +108,7 @@ public class ConfigManager {
     }
 
     public boolean updateDiscountRate(String passengerType, BigDecimal newRate) {
-        if (newRate.compareTo(BigDecimal.ZERO) < 0
-                || newRate.compareTo(BigDecimal.ONE) > 0) {
+        if (newRate.compareTo(BigDecimal.ZERO) < 0 || newRate.compareTo(BigDecimal.ONE) > 0) {
             System.out.println("Error: Discount rate must be between 0.00 and 1.00.");
             return false;
         }
@@ -155,7 +144,6 @@ public class ConfigManager {
         for (Map.Entry<String, BigDecimal> entry : dailyCaps.entrySet()) {
             System.out.println("  " + entry.getKey() + ": £" + entry.getValue());
         }
-        System.out.println("(Fare table: use Admin > View Fare Rules for zone details)");
         System.out.println("--------------------");
     }
 
