@@ -1,12 +1,7 @@
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * RiderSession – manages the full rider menu loop for a single session.
- * Responsibilities: prompt for and load a rider profile, present the rider
- * menu, and delegate each choice to the appropriate manager or handler.
- * Keeps CityRideLite.main() clean by encapsulating all rider-side logic.
- */
+// RiderSession Class
 public class RiderSession {
 
     private static final String SEPARATOR    = "--------------------";
@@ -19,12 +14,6 @@ public class RiderSession {
     private final FileManager fileManager;
     private RiderProfile profile;
 
-    /**
-     * Constructs a RiderSession with all required dependencies.
-     *
-     * @param scanner       shared Scanner for user input
-     * @param configManager the active system configuration
-     */
     public RiderSession(Scanner scanner, ConfigManager configManager) {
         this.scanner       = scanner;
         this.configManager = configManager;
@@ -33,21 +22,16 @@ public class RiderSession {
         this.fileManager   = new FileManager();
     }
 
-    /**
-     * Starts the rider session: loads or creates a profile, then runs the menu.
-     */
     public void start() {
         setupProfile();
         runRiderMenu();
     }
 
-    // ── Profile setup ─────────────────────────────────────────────
-
-    /** Asks the rider whether to load an existing profile or create a new one. */
     private void setupProfile() {
         System.out.println(SEPARATOR);
         System.out.println("1. Load existing profile");
         System.out.println("2. Create new profile");
+        System.out.println(SEPARATOR);
         System.out.print("Choose: ");
         String choice = scanner.nextLine().trim();
 
@@ -58,7 +42,6 @@ public class RiderSession {
         }
     }
 
-    /** Prompts for a filename and loads the profile from JSON. */
     private void loadExistingProfile() {
         System.out.print("Enter profile filename (e.g. deborah_profile.json): ");
         String filePath = scanner.nextLine().trim();
@@ -69,8 +52,8 @@ public class RiderSession {
         }
     }
 
-    /** Prompts the rider to enter their details and creates a new profile. */
     private void createNewProfile() {
+        System.out.println(SEPARATOR);
         System.out.print("Enter your name: ");
         String name = scanner.nextLine().trim();
 
@@ -83,9 +66,6 @@ public class RiderSession {
         System.out.println("Profile created. Welcome, " + name + "!");
     }
 
-    // ── Rider menu loop ───────────────────────────────────────────
-
-    /** Displays and processes the rider menu until the rider chooses to exit. */
     private void runRiderMenu() {
         boolean running = true;
         while (running) {
@@ -95,7 +75,6 @@ public class RiderSession {
         }
     }
 
-    /** Prints the rider menu. */
     private void showRiderMenu() {
         System.out.println("\n" + WIDE_SEP);
         System.out.println("  CITYRIDE LITE – " + profile.getName());
@@ -115,12 +94,6 @@ public class RiderSession {
         System.out.print("Enter choice: ");
     }
 
-    /**
-     * Routes the rider's menu choice to the appropriate handler.
-     *
-     * @param choice the input string from the rider
-     * @return false if the rider chose to exit; true to keep the menu running
-     */
     private boolean handleRiderChoice(String choice) {
         switch (choice) {
             case "1":  profile.displayProfile();           return true;
@@ -141,35 +114,60 @@ public class RiderSession {
         }
     }
 
-    // ── Journey handlers ──────────────────────────────────────────
-
-    /** Prompts for all journey fields and adds the journey via JourneyManager. */
     private void handleAddJourney() {
+        showFareReference();
+
         System.out.print("Passenger name (Enter to use profile name): ");
         String name = scanner.nextLine().trim();
         if (name.isEmpty()) {
             name = profile.getName();
         }
 
-        int fromZone = promptZone("from");
-        int toZone   = promptZone("to");
+        int fromZone    = promptZone("from");
+        int toZone      = promptZone("to");
         String timeBand = promptTimeBand();
 
         System.out.print("Passenger type [" + profile.getPassengerType()
                 + "] (Enter to use profile): ");
-        String typeInput = scanner.nextLine().trim().toUpperCase();
+        String typeInput     = scanner.nextLine().trim().toUpperCase();
         String passengerType = typeInput.isEmpty() ? profile.getPassengerType() : typeInput;
 
         journeyManager.addJourney(name, fromZone, toZone, timeBand, passengerType);
     }
 
-    /** Prompts for a passenger type and filters the journey list. */
+    private void showFareReference() {
+        System.out.println(SEPARATOR);
+        System.out.println("FARE REFERENCE TABLE");
+        System.out.println(SEPARATOR);
+        System.out.println("Zone Pair | PEAK   | OFF_PEAK");
+        System.out.println("----------+--------+---------");
+        int[] zones = {1, 2, 3, 4, 5};
+        for (int from : zones) {
+            for (int to : zones) {
+                String peak    = "£" + configManager.getBaseFare(from, to, "PEAK");
+                String offPeak = "£" + configManager.getBaseFare(from, to, "OFF_PEAK");
+                System.out.printf("  %d  →  %d  | %-6s | %s%n", from, to, peak, offPeak);
+            }
+        }
+        System.out.println(SEPARATOR);
+        System.out.println("DISCOUNTS:");
+        String[] types = {"ADULT", "STUDENT", "CHILD", "SENIOR_CITIZEN"};
+        for (String t : types) {
+            java.math.BigDecimal rate = configManager.getDiscountRate(t);
+            java.math.BigDecimal cap  = configManager.getDailyCap(t);
+            System.out.printf("  %-15s discount: %-4s  daily cap: £%s%n",
+                    t,
+                    rate.multiply(new java.math.BigDecimal("100")).stripTrailingZeros().toPlainString() + "%",
+                    cap);
+        }
+        System.out.println(SEPARATOR);
+    }
+
     private void handleFilterJourneys() {
         String type = promptPassengerType();
         journeyManager.filterByPassengerType(type);
     }
 
-    /** Prompts for a journey ID and removes that journey. */
     private void handleRemoveJourney() {
         if (!journeyManager.hasJourneys()) {
             System.out.println(SEPARATOR);
@@ -183,9 +181,6 @@ public class RiderSession {
         journeyManager.removeJourney(id);
     }
 
-    // ── File handlers ─────────────────────────────────────────────
-
-    /** Exports all journeys to a CSV file. */
     private void handleExportJourneys() {
         if (!journeyManager.hasJourneys()) {
             System.out.println("No journeys to export.");
@@ -194,7 +189,6 @@ public class RiderSession {
         fileManager.exportJourneysCsv(journeyManager.getJourneys(), profile.getName());
     }
 
-    /** Exports the summary as both a CSV and a text file. */
     private void handleExportSummary() {
         if (!journeyManager.hasJourneys()) {
             System.out.println("No journeys to export.");
@@ -205,7 +199,6 @@ public class RiderSession {
         fileManager.exportSummaryText(buildSummaryText(), profile.getName());
     }
 
-    /** Imports journeys from a CSV file, creating Journey objects for each valid row. */
     private void handleImportJourneys() {
         System.out.print("Enter CSV filename to import (e.g. journeys.csv): ");
         String filePath = scanner.nextLine().trim();
@@ -214,7 +207,7 @@ public class RiderSession {
         int added = 0;
         for (String[] row : rows) {
             try {
-                // CSV column order: id, date, name, from, to, band, type, base, discount, charged
+
                 int from     = Integer.parseInt(row[3].trim());
                 int to       = Integer.parseInt(row[4].trim());
                 String band  = row[5].trim();
@@ -223,20 +216,18 @@ public class RiderSession {
                 journeyManager.addJourney(name, from, to, band, type);
                 added++;
             } catch (Exception e) {
-                // Row could not be processed — already counted as rejected by FileManager
+
             }
         }
         System.out.println(added + " journey(s) added from import.");
     }
 
-    /** Saves the current profile to a JSON file. */
     private void handleSaveProfile() {
         String filePath = profile.getName().replaceAll("\\s+", "_").toLowerCase()
                 + "_profile.json";
         fileManager.saveProfile(profile, filePath);
     }
 
-    /** Offers to save profile and journeys, then ends the session. */
     private void handleSaveAndExit() {
         System.out.print("Save profile and journeys before exiting? (Y/N): ");
         String confirm = scanner.nextLine().trim().toUpperCase();
@@ -249,14 +240,6 @@ public class RiderSession {
         System.out.println(SEPARATOR);
     }
 
-    // ── Input helpers ─────────────────────────────────────────────
-
-    /**
-     * Prompts for a zone number, looping until a valid value (1–5) is entered.
-     *
-     * @param label "from" or "to" for the prompt text
-     * @return the validated zone number
-     */
     private int promptZone(String label) {
         int zone = 0;
         boolean valid = false;
@@ -272,11 +255,6 @@ public class RiderSession {
         return zone;
     }
 
-    /**
-     * Prompts for a time band, looping until PEAK or OFF_PEAK is entered.
-     *
-     * @return the validated time band string
-     */
     private String promptTimeBand() {
         String band = "";
         boolean valid = false;
@@ -292,11 +270,6 @@ public class RiderSession {
         return band;
     }
 
-    /**
-     * Prompts for a passenger type, looping until a valid value is entered.
-     *
-     * @return the validated passenger type string
-     */
     private String promptPassengerType() {
         String type = "";
         boolean valid = false;
@@ -314,26 +287,20 @@ public class RiderSession {
         return type;
     }
 
-    /**
-     * Reads an integer, re-prompting on invalid input.
-     *
-     * @return the integer value entered
-     */
     private int readInt() {
-        while (true) {
+        int value = 0;
+        boolean valid = false;
+        while (!valid) {
             try {
-                return Integer.parseInt(scanner.nextLine().trim());
+                value = Integer.parseInt(scanner.nextLine().trim());
+                valid = true;
             } catch (NumberFormatException e) {
                 System.out.print("Please enter a whole number: ");
             }
         }
+        return value;
     }
 
-    /**
-     * Builds a plain-text summary string for file export.
-     *
-     * @return formatted summary text
-     */
     private String buildSummaryText() {
         return "CityRide Lite – End of Day Summary\n"
                 + "Rider: " + profile.getName() + "\n"

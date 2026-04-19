@@ -1,8 +1,9 @@
 import java.util.Scanner;
 
+// CityRideLite Class
 public class CityRideLite {
 
-    private static final String SEPARATOR = "====================";
+    private static final String SEPARATOR = "    ====================";
 
     public static void main(String[] args) {
 
@@ -40,6 +41,7 @@ public class CityRideLite {
     }
 
     private static void showBanner() {
+        System.out.println(" ");
         System.out.println(SEPARATOR);
         System.out.println("   WELCOME TO CITYRIDE LITE");
         System.out.println("   Transport Fare Companion");
@@ -48,9 +50,11 @@ public class CityRideLite {
 
     private static void showRoleMenu() {
         System.out.println("\nSelect role:");
+        System.out.println("  ----------------------------");
         System.out.println("  RIDER  - Manage your journeys");
         System.out.println("  ADMIN  - System configuration");
         System.out.println("  EXIT   - Quit the program");
+        System.out.println("  ----------------------------");
         System.out.print("Enter role: ");
     }
 }

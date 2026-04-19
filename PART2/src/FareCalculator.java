@@ -1,6 +1,7 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+// FareCalculator Class
 public class FareCalculator {
 
     private final ConfigManager configManager;

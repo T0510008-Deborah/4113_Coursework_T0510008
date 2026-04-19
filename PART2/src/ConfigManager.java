@@ -3,6 +3,7 @@ import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
 
+// ConfigManager Class
 public class ConfigManager {
 
     private Map<String, BigDecimal> baseFares;

@@ -1,6 +1,7 @@
 import java.math.BigDecimal;
 import java.util.Scanner;
 
+// AdminSession Class
 public class AdminSession {
 
     private static final String ADMIN_PASSWORD = "CityRide2026";

@@ -1,5 +1,6 @@
 import java.math.BigDecimal;
 
+// Journey Class
 public class Journey {
 
     private int id;
