@@ -36,13 +36,13 @@ CityRide Lite is organised around the management of individual public transport 
 
 5. [Testing](#testing)
    
-   [Display Menu FR1](#display-menu-fr1)
+   [Display Menu Fr1](#display-menu-fr1)
    
-   [Calculate Fare FR3](#calculate-fare-fr3)
+   [Calculate Fare Fr3](#calculate-fare-fr3)
    
-   [Remove Journey FR6](#remove-journey-fr6)
+   [Remove Journey Fr6](#remove-journey-fr6)
    
-   [Filter Journey FR5](#filter-journey-fr5)
+   [Filter Journey Fr5](#filter-journey-fr5)
 
 6. [Evaluation](#evaluation)
 
@@ -72,11 +72,11 @@ The CityRide Lite system was developed based on a detailed specification accordi
 
 Functional requirements include;
 
-- Displaying a looping main menu which allows user selection
+- Displaying a looping main menu which allow user selection
 
 - Adding journeys with validated input (date, zones, passenger type, time band)
 
-- Calculating fare based on zones crossed, discounts, and daily caps
+- Calculate fare based on zones crossed, discounts, and daily caps
 
 - Determining base fares using the provided dataset
 
@@ -90,7 +90,7 @@ Functional requirements include;
 
 - Filter journeys based on passenger type
 
-- Remove a journey using its ID for validation
+- Remove a journey using its ID as validation
 
 - Reset all stored data for a new day
 
@@ -100,7 +100,7 @@ Functional requirements include;
 
 **<u>Non Functional Requirements</u>**
 
-Non-functional requirements include;
+Non Functional requirements include;
 
 - The system must use object-oriented programming principles
 
@@ -451,7 +451,7 @@ When we do black box testing we test inputs and outputs and not the internal cod
 
 *Functional Requirement:*
 
-**Display Menu FR1**
+**Display Menu Fr1**
 
 | Test No. | Input                          | Expected Output          | Actual Output                 | Result |
 | -------- | ------------------------------ | ------------------------ | ----------------------------- | ------ |
@@ -562,7 +562,7 @@ SENIOR_CITIZEN Daily Cap: £7.00
 --------------------
 ```
 
-**Calculate Fare FR3**
+**Calculate Fare Fr3**
 
 | Test No. | Input               | Expected Output   | Actual Output          | Result |
 | -------- | ------------------- | ----------------- | ---------------------- | ------ |
@@ -570,14 +570,14 @@ SENIOR_CITIZEN Daily Cap: £7.00
 | **9**    | STUDENT discount    | Fare reduced 25%  | Correct reduced fare   | Pass   |
 | **10**   | Daily cap exceeded  | Fare capped       | Cap applied correctly  | Pass   |
 
-**Remove Journey FR6**
+**Remove Journey Fr6**
 
 | Test No. | Input      | Expected Output | Actual Output        | Result |
 | -------- | ---------- | --------------- | -------------------- | ------ |
 | **11**   | Valid ID   | Journey removed | Removal confirmation | Pass   |
 | **12**   | Invalid ID | Error message   | ID not found message | Pass   |
 
-**Filter Journey FR5**
+**Filter Journey Fr5**
 
 | Test No. | Input                  | Expected Output           | Actual Output         | Result |
 | -------- | ---------------------- | ------------------------- | --------------------- | ------ |
