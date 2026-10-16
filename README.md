@@ -14,4 +14,4 @@ This section contains the Java programming work completed for Part 1, including 
 
 This section contains the CityRide Lite application developed for Part 2. The project focuses on managing public transport journeys through a console-based Java application.
 
-[View Part 2 →](./City%20Ride%20Lite%20PART2/)
+[View Part 2 →](./City%20Ride%20Lite%20PART2/README.md)
