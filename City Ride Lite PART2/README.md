@@ -1,4 +1,4 @@
-### CityRide Lite - Enahanced
+### CityRide Lite - Enhanced
 
 --------------------------------------------------------
 
