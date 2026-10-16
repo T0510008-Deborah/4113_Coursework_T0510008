@@ -8,7 +8,7 @@ This repository contains my work for the IY4113 module, covering both parts of t
 
 This section contains the Java programming work completed for Part 1, including the practical exercises and coursework developed throughout the module.
 
-[View Part 1 →](./City%20Ride%20Lite%20PART1/)
+[View Part 1 →](./City%20Ride%20Lite%20PART1/README.md)
 
 ### Part 2 – CityRide Lite
 
