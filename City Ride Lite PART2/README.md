@@ -44,7 +44,7 @@ The application also includes an administration area where authorised users can 
 
 7. [Evaluation](#evaluation)
    
-   [Does the Program Meet the Requirements?](#does-the-program-meet-the-requirements?)
+   [Does the Program Meet the Requirements](#does-the-program-meet-the-requirements)
    
    [Strengths of the Program](#strengths-of-the-program)
    
@@ -589,7 +589,7 @@ Black box testing was conducted on all Scanner based inputs in the CityRide Lite
 
 -------------------------------------------
 
-#### **Does the Program Meet the Requirements?**
+#### **Does the Program Meet the Requirements**
 
 CityRide Lite Part 2 meets the large majority of the functional requirements set out in the assignment brief. The two-role system (Rider and Admin) is fully implemented, with role selection at startup routing correctly to either the Rider session or the Admin login. Configuration loading at startup works correctly, defaulting to built-in values if the JSON config file is absent, which satisfies the requirement for graceful degradation. Rider profile creation, saving, and loading via JSON are all functional. Journeys can be added with full fare calculation, including zone-pair base fares, passenger-type discounts, and daily cap enforcement. Deletion of journeys triggers a full recalculation of all remaining fares and caps, as required.
 
