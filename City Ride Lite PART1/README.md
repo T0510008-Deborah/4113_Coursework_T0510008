@@ -36,13 +36,13 @@ CityRide Lite is organised around the management of individual public transport 
 
 5. [Testing](#testing)
    
-   [Display Menu Fr1](#display-menu-fr1)
+   [Display Menu FR1](#display-menu-fr1)
    
-   [Calculate Fare Fr3](#calculate-fare-fr3)
+   [Calculate Fare FR3](#calculate-fare-fr3)
    
-   [Remove Journey Fr6](#remove-journey-fr6)
+   [Remove Journey FR6](#remove-journey-fr6)
    
-   [Filter Journey Fr5](#filter-journey-fr5)
+   [Filter Journey FR5](#filter-journey-fr5)
 
 6. [Evaluation](#evaluation)
 
@@ -68,7 +68,7 @@ Throughout the development process, the system was built progressively across mu
 
 The CityRide Lite system was developed based on a detailed specification according to the functional and non - functional requirements outlined in the assignment brief. The program is required to operate as a console - based, in memory application that records public transport journeys for a single day. The main objective is to simulate a simplified public transport fare system that calculates journey costs based on predefined rules. No file storage is used, and all data is reset when the program terminates.
 
-<u>**Functional Requirements**</u>
+##### <u>**Functional Requirements**</u>
 
 Functional requirements include;
 
@@ -98,7 +98,7 @@ Functional requirements include;
 
 - Exit the program safely
 
-**<u>Non Functional Requirements</u>**
+##### **<u>Non Functional Requirements</u>**
 
 Non Functional requirements include;
 
@@ -112,7 +112,7 @@ Non Functional requirements include;
 
 - The system must be easy to use through a structured menu interface
 
-**<u>Input Process Output Design</u>**
+##### **<u>Input Process Output Design</u>**
 
 The Input – Process - Output (IPO) table was developed to clearly identify:
 
@@ -146,7 +146,7 @@ Each feature is initiated by user input (e.g., menu choice, journey details, jou
 
 The algorithm design for CityRide Lite was developed using structured flowcharts and a class diagram to visually demonstrate the program logic and object - oriented structure. The system was decomposed into smaller functional components to improve clarity and maintainability.
 
-**<u>Main Menu Flowchart</u>**
+##### **<u>Main Menu Flowchart</u>**
 
 The main menu flowchart represents the overall control structure of the program. The system begins execution in the main method and enters a loop that continues until the user selects the Exit option. When the program starts, the menu options are displayed and the user is prompted to enter a choice. The input is validated to ensure it is within the permitted range. 
 
@@ -181,7 +181,7 @@ flowchart TD
     N --> B
 ```
 
-**<u>Add Journey Flowchart</u>**
+##### **<u>Add Journey Flowchart</u>**
 
 The Add Journey process is the most detailed functional component of the system. The algorithm follows these steps:
 
@@ -248,7 +248,7 @@ flowchart TD
     R --> S([End])
 ```
 
-**<u>Calculate Fare Flowchart</u>**
+##### **<u>Calculate Fare Flowchart</u>**
 
 The Calculate Fare flowchart focuses specifically on fare computation logic. It separates business logic from user interaction.
 
@@ -283,7 +283,7 @@ flowchart TD
     H --> I([End])
 ```
 
-**<u>Filter Journeys Flowchart</u>**
+##### **<u>Filter Journeys Flowchart</u>**
 
 The Filter Journeys flowchart demonstrates how the system searches stored journeys based on specific criteria. The journey list is then searched using a loop. Matching journeys are displayed. If no matches are found, an appropriate message is shown. Control then returns to the main menu.
 
@@ -311,7 +311,7 @@ flowchart TD
     L --> M([End])
 ```
 
-**<u>Remove Journey Flowchart</u>**
+##### **<u>Remove Journey Flowchart</u>**
 
 The Remove Journey flowchart allows a user to delete a stored journey. The system prompts the user to enter a Journey ID. The ID is validated and the journey list is searched. If the journey is found, it is removed from memory and totals are recalculated where necessary. A confirmation message is displayed. If the ID does not exist, an error message is shown.
 
@@ -451,7 +451,7 @@ When we do black box testing we test inputs and outputs and not the internal cod
 
 *Functional Requirement:*
 
-**Display Menu Fr1**
+##### **Display Menu FR1**
 
 | Test No. | Input                          | Expected Output          | Actual Output                 | Result |
 | -------- | ------------------------------ | ------------------------ | ----------------------------- | ------ |
@@ -562,7 +562,7 @@ SENIOR_CITIZEN Daily Cap: £7.00
 --------------------
 ```
 
-**Calculate Fare Fr3**
+##### **Calculate Fare FR3**
 
 | Test No. | Input               | Expected Output   | Actual Output          | Result |
 | -------- | ------------------- | ----------------- | ---------------------- | ------ |
@@ -570,14 +570,14 @@ SENIOR_CITIZEN Daily Cap: £7.00
 | **9**    | STUDENT discount    | Fare reduced 25%  | Correct reduced fare   | Pass   |
 | **10**   | Daily cap exceeded  | Fare capped       | Cap applied correctly  | Pass   |
 
-**Remove Journey Fr6**
+##### **Remove Journey FR6**
 
 | Test No. | Input      | Expected Output | Actual Output        | Result |
 | -------- | ---------- | --------------- | -------------------- | ------ |
 | **11**   | Valid ID   | Journey removed | Removal confirmation | Pass   |
 | **12**   | Invalid ID | Error message   | ID not found message | Pass   |
 
-**Filter Journey Fr5**
+##### **Filter Journey FR5**
 
 | Test No. | Input                  | Expected Output           | Actual Output         | Result |
 | -------- | ---------------------- | ------------------------- | --------------------- | ------ |
